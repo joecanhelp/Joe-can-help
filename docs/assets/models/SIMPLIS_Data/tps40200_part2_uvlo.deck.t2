@@ -1,0 +1,8 @@
+$$$ 1 10001 1    simplis  DATA FOR PLOTTING,  Mon Apr  6 10:59:23 2026     
+INPUT FILE: C:/Users/pilif/OneDrive/_website/joe-can-help/docs/assets/models/SIMPLIS_Data/tps40200_part2_uvlo.deck
+Transient Analysis
+10001 DATA PTS                
+1 VARIABLES                                       
+0   TIME
+1   V(#VDD)
+

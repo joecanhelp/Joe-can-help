@@ -1,0 +1,8 @@
+title: Home
+nav:
+  - index.md
+#  - circuit-theory   # 這裡寫資料夾名稱
+  - ic-modeling
+  - tool          # 這裡寫資料夾名稱
+  - ...
+  - about.md

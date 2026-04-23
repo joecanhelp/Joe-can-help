@@ -1,0 +1,237 @@
+{
+  "main": {
+    "id": "8c9aa9c2ab0fe058",
+    "type": "split",
+    "children": [
+      {
+        "id": "31f6bbcc2a21b424",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "2cef8666a65fb0bc",
+            "type": "leaf",
+            "state": {
+              "type": "yaml",
+              "state": {
+                "file": "mkdocs.yml"
+              },
+              "icon": "lucide-file",
+              "title": "mkdocs"
+            }
+          },
+          {
+            "id": "c26c2831fac131d3",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "docs/about.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "about"
+            }
+          },
+          {
+            "id": "8a7803aa7f73cd0a",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "docs/ic-modeling/tps40200-part2.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "tps40200-part2"
+            }
+          }
+        ],
+        "currentTab": 2
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "f7efc94f22e46634",
+    "type": "split",
+    "children": [
+      {
+        "id": "7a7bb7554dc95070",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "e036aeeb436b33a9",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "檔案瀏覽器"
+            }
+          },
+          {
+            "id": "b2124d731f9174ed",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "搜尋"
+            }
+          },
+          {
+            "id": "8c3c33ed9deb1337",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "書籤"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "ff6a21208e3869f7",
+    "type": "split",
+    "children": [
+      {
+        "id": "287f2c5ba66ddc56",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "da2b49cd85e203a4",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "docs/ic-modeling/tps40200-part2.md",
+                "collapseAll": true,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "tps40200-part2 的反向連結"
+            }
+          },
+          {
+            "id": "1dae415f4cfb2692",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "對外連結"
+            }
+          },
+          {
+            "id": "4035f2a7331dc545",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "標籤"
+            }
+          },
+          {
+            "id": "0cd8e8742bab4f42",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "所有屬性"
+            }
+          },
+          {
+            "id": "b0e0129c22a90a0b",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "docs/ic-modeling/tps40200-part2.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "tps40200-part2 的大綱"
+            }
+          }
+        ],
+        "currentTab": 4
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:開啟快速切換": false,
+      "graph:查看關聯圖": false,
+      "canvas:建立新畫布": false,
+      "daily-notes:開啟今天的每日筆記": false,
+      "templates:插入模板": false,
+      "command-palette:開啟命令面板": false,
+      "bases:建立新的 base": false
+    }
+  },
+  "active": "8a7803aa7f73cd0a",
+  "lastOpenFiles": [
+    "docs/tool/loop-gain.csv",
+    "docs/tool/loop-gain-tune-tool.html",
+    "docs/assets/models/SIMPLIS_Data/tps40200_part2_uvlo.deck.GrpName",
+    "docs/assets/models/SIMPLIS_Data/tps40200_part2_uvlo.deck.t0",
+    "docs/assets/models/SIMPLIS_Data/tps40200_part2_uvlo.deck.t2",
+    "docs/assets/models/SIMPLIS_Data/tps40200_part2_uvlo.deck.tc",
+    "docs/assets/models/SIMPLIS_Data/tps40200_part2_uvlo.deck.init",
+    "docs/assets/models/SIMPLIS_Data/tps40200_part2_uvlo.net",
+    "docs/assets/models/SIMPLIS_Data/tps40200_part2_uvlo.deck.lst",
+    "docs/assets/models/SIMPLIS_Data/tps40200_part2_uvlo.deck.err",
+    "docs/assets/models/SIMPLIS_Data/tps40200_part2_uvlo.deck.dbg",
+    "docs/ic-modeling/tps40200-part1.md",
+    "docs/ic-modeling/tps40200-part2.md",
+    "docs/ic-modeling/tps40200-part3.md",
+    "docs/tool/type-iii-calculator.md",
+    "docs/about.md",
+    "mathjax.js.md",
+    "docs/index.md",
+    "docs/assets/favicon.png",
+    "docs/assets/logo.png",
+    "docs/assets/Logo.png",
+    "docs/assets/Icon.png"
+  ]
+}

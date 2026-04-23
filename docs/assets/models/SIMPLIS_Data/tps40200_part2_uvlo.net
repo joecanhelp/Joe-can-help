@@ -1,0 +1,27 @@
+* C:\Users\pilif\OneDrive\_website\joe-can-help\docs\assets\models\tps40200_part2_uvlo.sxsch
+*#SIMETRIX
+.node_map VDD 8
+.node_map Run 9
+.options
++ PSP_NPT=10001
++ POP_ITRMAX=20
++ POP_OUTPUT_CYCLES=5
++ SNAPSHOT_INTVL=0
++ SNAPSHOT_NPT=11
++ MIN_AVG_TOPOLOGY_DUR=1a
++ AVG_TOPOLOGY_DUR_MEASUREMENT_WINDOW=128
+.tran 1m 0
+
+
+.var V_UVLO_ON = 4.3
+.var V_UVLO_OFF = 4.1
+.var V_UVLO_HYS = {V_UVLO_ON - V_UVLO_OFF}
+
+.PRINT V(#VDD)
+.GRAPH :#VDD curveLabel= VDD nowarn=true ylog=auto xlog=auto analysis=tran|pop disabled=false PROBEREF=Probe1  
+.PRINT V(#Run)
+.GRAPH :#Run curveLabel= Run nowarn=true ylog=auto xlog=auto analysis=tran|pop disabled=false PROBEREF=Probe2  
+X$U1 9 7 0 8 6 SIMPLIS_DIGI1_COMP_Y vars: IC=0 RIN=10Meg ROUT=10 HYSTWD={V_UVLO_HYS} VOL=0 VOH=5 DELAY=2p
+V1 6 0 {(V_UVLO_ON + V_UVLO_OFF) / 2}
+X$V2 8 0 TRI_SOURCE vars: _V1=0 _V2=5 _FREQ=1k _DELAY=0 _DRATIOx100=50 _T_RISE=500u _T_FALL=500u _DAMP_COEF=0 _PWIDTH=0 _OFF_UNTIL_DELAY=0 _IDLE_IN_POP=0 _USEPHASE=0 _PHASE=0 _SHOWPARAMS=0
+.end

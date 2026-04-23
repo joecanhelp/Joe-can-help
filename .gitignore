@@ -1,0 +1,17 @@
+# --- SIMPLIS 模擬產生的暫態與輔助檔 ---
+*.sxdat      # 模擬結果原始資料 (體積非常大)
+*.deck       # 轉換後的電路網表
+*.err        # 模擬錯誤訊息紀錄
+*.log        # 模擬日誌
+*.init       # 初始化設定
+*.sxbak      # 電路圖備份檔
+*.bak        # 一般備份檔
+
+# --- SIMPLIS 產生的暫存資料夾 ---
+# SIMPLIS 模擬時會產生開頭為 ! 的資料夾 (例如 !sx_schematic_name)
+!*/
+
+# --- MkDocs 與 Python 相關忽略 ---
+site/        # MkDocs 編譯輸出的網頁資料夾
+__pycache__/ # Python 暫存碼
+.DS_Store    # Mac 系統產生的隱藏檔 (如果是 Mac 使用者)
