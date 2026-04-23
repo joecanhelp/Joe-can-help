@@ -1,0 +1,37 @@
+* C:\Users\pilif\OneDrive\_website\joe-can-help\docs\assets\models\tps40200_part2_uvlo.sxsch
+.node_map VDD 8
+.node_map Run 9
+.options PSP_NPT=10001 POP_ITRMAX=20 POP_OUTPUT_CYCLES=5 SNAPSHOT_INTVL=0 SNAPSHOT_NPT=11
++ MIN_AVG_TOPOLOGY_DUR=1a AVG_TOPOLOGY_DUR_MEASUREMENT_WINDOW=128
+.tran 1m 0
+.PRINT V(#VDD)
+.GRAPH :#VDD curveLabel= VDD nowarn=true ylog=auto xlog=auto analysis=tran|pop disabled=false
++ PROBEREF=Probe1  
+.PRINT V(#Run)
+.GRAPH :#Run curveLabel= Run nowarn=true ylog=auto xlog=auto analysis=tran|pop disabled=false
++ PROBEREF=Probe2  
+X$U1 9 7 0 8 6 SIMPLIS_DIGI1_COMP_Y$1
+V1 6 0 4.2
+X$V2 8 0 TRI_SOURCE$2
+.subckt TRI_SOURCE$2  1 2
+.NODE_MAP P 1
+.NODE_MAP N 2
+V1 1 2 TRI  V1=0   V2=5   FREQ=1000   DRATIO=0.5  DELAY=0   OFF_UNTIL_DELAY=NO   IDLE_IN_POP=NO
+.ends TRI_SOURCE$2
+
+.subckt SIMPLIS_DIGI1_COMP_Y$1  201 202 100 101 102
+.NODE_MAP OUT 201
+.NODE_MAP OUT_BAR 202
+.NODE_MAP RTN 100
+.NODE_MAP INP 101
+.NODE_MAP INN 102
+R_INP  101 100 10000000
+R_INN  102 100 10000000
+E_DIFF 103 100 101 102 1.0
+A_COMP %gnd_ref 100 [ 201 202 ] [ 103 ] MODEL=MD_A_COMPM IC=0
+.MODEL MD_A_COMPM DIGITAL1 D_BUFFER ROUT=10 VOL=0 VOH=5  RIN=10000000 TH=0.0 HYSTWD=0.2
++  OUT_DELAY=2e-12
+.ends SIMPLIS_DIGI1_COMP_Y$1
+
+.end
+

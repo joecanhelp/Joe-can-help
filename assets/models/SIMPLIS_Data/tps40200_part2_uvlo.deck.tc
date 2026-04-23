@@ -1,0 +1,60 @@
+simplis VERSION 8.30, RELEASE Rel-19.30 -- .tc FILE                    
+1775444383                 8 IEEE754 LITTLE-ENDIAN                     
+                                                                                                                                 
+                                                                       
+
+Title: * C:\Users\pilif\OneDrive\_website\joe-can-help\docs\assets\models\tps40200_part2_uvlo.sxsch
+V1  6  0  DC  4.2
+X$U1  9  7  0  8  6  SUBCKT=SIMPLIS_DIGI1_COMP_Y$1
+X$V2  8  0  SUBCKT=TRI_SOURCE$2
+.SUBCKT  TRI_SOURCE$2  -1  -2
+R#PIN_1 -1 1 0.0
+R#PIN_2 -2 2 0.0
+V1  1  2  TRI  V1=0  V2=5  FREQ=1000  DRATIO=0.5  DELAY=0
++   OFF_UNTIL_DELAY=NO  IDLE_IN_POP=NO
+.ENDS TRI_SOURCE$2
+.SUBCKT  SIMPLIS_DIGI1_COMP_Y$1  -1  -2  -3  -4  -5
+R#PIN_1 -1 201 0.0
+R#PIN_2 -2 202 0.0
+R#PIN_3 -3 100 0.0
+R#PIN_4 -4 101 0.0
+R#PIN_5 -5 102 0.0
+R_INN  102  100  10000000
+R_INP  101  100  10000000
+E_DIFF  103  100  101  102  1
+A_COMP  gnd_ref=1  n_input=1  n_output=2  100  201  202  103
++   MODEL=MD_A_COMPM
+.MODEL  MD_A_COMPM  D_BUFFER  RIN=10000000  TH=0  HYSTWD=0.2  ROUT=10
++   VOL=0  VOH=5  STORED_DELAY=0  RISE_DELAY=2.000000000000000e-12
++   FALL_DELAY=2.000000000000000e-12
+.INIT  A_COMP:IC=0
+.ENDS SIMPLIS_DIGI1_COMP_Y$1
+.END
+------------------------------------------------------------------------
+
+
+INDEX OF STATES: 2
+     0  X$U1.A_COMP-I0
+      2 X$V2.V1
+
+
+INDEX OF STATE VARIABLES:
+     0  V(X$V2.V1)
+
+
+INDEX OF SWITCH VARIABLES AS ASSOCIATED WITH DEVICES:
+    -6  CHANGE IN VERILOG-HDL OUTPUT(S)
+    -5  EVENTS FOR DEVICES MODELED BY DLL
+    -4  EVENTS FOR ADV. DIGITAL DEVICES
+    -3  DELAYED EVENTS FOR LOGIC GATES
+    -2  NONLINEAR BLOCK TOLERANCES
+    -1  TIMER
+     0  X$U1.A_COMP-I0
+
+
+************************************************************************
+
+STATE
+ %0I010W
+
+I_TC: -24
