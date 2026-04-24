@@ -39,12 +39,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "docs/ic-modeling/tps40200-part2.md",
+                "file": "drafts/Github-deploy-procedure.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "tps40200-part2"
+              "title": "Github-deploy-procedure"
             }
           }
         ],
@@ -121,7 +121,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "docs/ic-modeling/tps40200-part2.md",
+                "file": "drafts/Github-deploy-procedure.md",
                 "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -131,7 +131,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "tps40200-part2 的反向連結"
+              "title": "Github-deploy-procedure 的反向連結"
             }
           },
           {
@@ -182,13 +182,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "docs/ic-modeling/tps40200-part2.md",
+                "file": "drafts/Github-deploy-procedure.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "tps40200-part2 的大綱"
+              "title": "Github-deploy-procedure 的大綱"
             }
           }
         ],
@@ -211,24 +211,28 @@
   },
   "active": "8a7803aa7f73cd0a",
   "lastOpenFiles": [
-    "docs/tool/loop-gain.csv",
-    "docs/tool/loop-gain-tune-tool.html",
-    "docs/assets/models/SIMPLIS_Data/tps40200_part2_uvlo.deck.GrpName",
-    "docs/assets/models/SIMPLIS_Data/tps40200_part2_uvlo.deck.t0",
-    "docs/assets/models/SIMPLIS_Data/tps40200_part2_uvlo.deck.t2",
-    "docs/assets/models/SIMPLIS_Data/tps40200_part2_uvlo.deck.tc",
-    "docs/assets/models/SIMPLIS_Data/tps40200_part2_uvlo.deck.init",
-    "docs/assets/models/SIMPLIS_Data/tps40200_part2_uvlo.net",
-    "docs/assets/models/SIMPLIS_Data/tps40200_part2_uvlo.deck.lst",
-    "docs/assets/models/SIMPLIS_Data/tps40200_part2_uvlo.deck.err",
-    "docs/assets/models/SIMPLIS_Data/tps40200_part2_uvlo.deck.dbg",
-    "docs/ic-modeling/tps40200-part1.md",
     "docs/ic-modeling/tps40200-part2.md",
+    "drafts/Github-deploy-procedure.md",
+    "docs/ic-modeling/tps40200-part1.md",
+    "docs/index.md",
+    "docs/tool/loop-gain-tune-by-type-iii.md",
+    "site/search/search_index.json",
+    "site/search",
+    "site/tool/type-iii-calculator/index.html",
+    "site/tool/type-iii-calculator",
+    "site/ic-modeling/tps40200-part3/index.html",
+    "site/ic-modeling/tps40200-part2/index.html",
+    "site/ic-modeling/tps40200-part1/index.html",
+    "site/ic-modeling/tps40200-part3",
+    "site/ic-modeling/tps40200-part2",
+    "site/ic-modeling/tps40200-part1",
+    "site/assets/images/favicon.png",
+    "site/assets/logo.png",
+    "site/assets/favicon.png",
     "docs/ic-modeling/tps40200-part3.md",
     "docs/tool/type-iii-calculator.md",
     "docs/about.md",
     "mathjax.js.md",
-    "docs/index.md",
     "docs/assets/favicon.png",
     "docs/assets/logo.png",
     "docs/assets/Logo.png",

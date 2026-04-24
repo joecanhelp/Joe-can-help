@@ -1,0 +1,981 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../tps40200-part1/">
+      
+      
+        <link rel="next" href="../tps40200-part3/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>[SIMPLIS 建模實戰 02] 喚醒 IC 的守門員：UVLO 與遲滯效應 - Joe can help</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#simplis-02-ic-uvlo" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Joe can help" class="md-header__button md-logo" aria-label="Joe can help" data-md-component="logo">
+      
+  <img src="../../assets/favicon.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Joe can help
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              [SIMPLIS 建模實戰 02] 喚醒 IC 的守門員：UVLO 與遲滯效應
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切換至暗色模式"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="切換至暗色模式" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切換至亮色模式"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="切換至亮色模式" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Joe can help" class="md-nav__button md-logo" aria-label="Joe can help" data-md-component="logo">
+      
+  <img src="../../assets/favicon.png" alt="logo">
+
+    </a>
+    Joe can help
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Welcome to Joe can help 👋
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    IC Modeling by SIMPLIS
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    IC Modeling by SIMPLIS
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tps40200-part1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    [SIMPLIS 建模實戰 01] 拆解 TPS40200：從 Datasheet 到模型架構
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    [SIMPLIS 建模實戰 02] 喚醒 IC 的守門員：UVLO 與遲滯效應
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    [SIMPLIS 建模實戰 02] 喚醒 IC 的守門員：UVLO 與遲滯效應
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#uvlo-hysteresis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🛡️ 為什麼 UVLO 必須要有「遲滯 (Hysteresis)」？
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🎛️ 互動展示：遲滯效應的抗雜訊魔法
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#simplis-uvlo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🛠️ 在 SIMPLIS 中建立 UVLO 模型
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        〽️模擬確認結果
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📥 實作檔案下載
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tps40200-part3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    [SIMPLIS 建模實戰 03] 打造心跳：參數化 RC 振盪器與 Ramp 產生器
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Design Tool
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Design Tool
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tool/type-iii-calculator/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Type III Calculator
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    關於我 | About Joe 🚀
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#uvlo-hysteresis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🛡️ 為什麼 UVLO 必須要有「遲滯 (Hysteresis)」？
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🎛️ 互動展示：遲滯效應的抗雜訊魔法
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#simplis-uvlo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🛠️ 在 SIMPLIS 中建立 UVLO 模型
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        〽️模擬確認結果
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📥 實作檔案下載
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="simplis-02-ic-uvlo">[SIMPLIS 建模實戰 02] 喚醒 IC 的守門員：UVLO 與遲滯效應</h1>
+<p>在我們準備讓晶片的心臟（振盪器）跳動之前，必須先經過一位嚴格的守門員 —— <strong>UVLO (Under-Voltage Lockout，欠壓鎖定)</strong>。</p>
+<p>想像一下，當電源剛接上，電壓從 0V 緩慢上升時，IC 內部的邏輯閘和運算放大器都處於「半醒半睡」的不穩定狀態。如果這時候就允許輸出 PWM 訊號去推動外部的功率開關，極有可能造成 MOSFET 擊穿炸毀。UVLO 的任務，就是確保電源電壓 (<span class="arithmatex">\(V_{DD}\)</span>) 達到絕對安全的標準後，才發出「全局致能 (Global Enable)」的指令。</p>
+<hr />
+<h2 id="uvlo-hysteresis">🛡️ 為什麼 UVLO 必須要有「遲滯 (Hysteresis)」？</h2>
+<p>很多初學者會以為，UVLO 只是一個簡單的比較器：「大於 4.3V 就開機，小於 4.3V 就關機」。</p>
+<p>但在真實的電源環境中，輸入電壓是充滿雜訊 (Noise) 的。如果我們只設定單一門檻 (例如 4.3V)，當輸入電壓剛好在 4.3V 附近微幅震盪時，IC 就會在一秒內瘋狂地「開機、關機、開機、關機」，這稱為 <strong>Chattering (震顫)</strong> 現象，對電路是致命的。</p>
+<p>為了解決這個問題，工程師引入了<strong>遲滯 (Hysteresis)</strong> 的概念。我們設定兩個不同的門檻：</p>
+<ul>
+<li><strong>啟動電壓 (<span class="arithmatex">\(V_{ON}\)</span>)</strong>：電壓必須上升超過此點，IC 才開機（例如 4.3V）。</li>
+<li><strong>關閉電壓 (<span class="arithmatex">\(V_{OFF}\)</span>)</strong>：電壓必須下降低於此點，IC 才關機（例如 4.1V）。</li>
+</ul>
+<p>這中間 0.2V 的差距就是「遲滯區間」，它提供了強大的抗雜訊能力。</p>
+<hr />
+<h2 id="_1">🎛️ 互動展示：遲滯效應的抗雜訊魔法</h2>
+<p>你可以透過下方的互動圖表，調整輸入電壓的「雜訊幅度」，並觀察有遲滯與無遲滯的 UVLO 輸出差異：</p>
+<p><em>(試著把「輸入雜訊幅度」拉大，你會發現最上方的「無遲滯」輸出會出現嚴重的碎裂（Chattering），而「有遲滯」的輸出依然穩如泰山！)</em></p>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+  .uvlo-container {
+    background: var(--md-default-bg-color);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+  }
+  .input-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-bottom: 20px;
+    background: var(--md-code-bg-color);
+    padding: 15px;
+    border-radius: 6px;
+  }
+  .slider-group label { display: flex; justify-content: space-between; font-weight: bold; margin-bottom: 8px; }
+  .slider-group input[type="range"] { width: 100%; cursor: pointer; }
+</style>
+
+<div class="uvlo-container">
+  <div class="input-grid">
+    <div class="slider-group">
+      <label><span>開機門檻 (V_ON):</span> <span id="valVon" style="color: #4CAF50;">4.3 V</span></label>
+      <input type="range" id="Von" min="3.0" max="6.0" step="0.1" value="4.3" oninput="updateUVLO()">
+    </div>
+    <div class="slider-group">
+      <label><span>關機門檻 (V_OFF):</span> <span id="valVoff" style="color: #E91E63;">4.1 V</span></label>
+      <input type="range" id="Voff" min="2.0" max="5.5" step="0.1" value="4.1" oninput="updateUVLO()">
+    </div>
+    <div class="slider-group">
+      <label><span>輸入雜訊幅度:</span> <span id="valNoise">0.5 V</span></label>
+      <input type="range" id="Noise" min="0" max="1.5" step="0.1" value="0.5" oninput="updateUVLO()">
+    </div>
+  </div>
+  <canvas id="uvloChart" width="400" height="200"></canvas>
+</div>
+
+<script>
+let uvloChart;
+
+function updateUVLO() {
+    let Von = parseFloat(document.getElementById('Von').value);
+    let Voff = parseFloat(document.getElementById('Voff').value);
+    const Noise = parseFloat(document.getElementById('Noise').value);
+
+    // 防呆：確保 V_ON 永遠大於等於 V_OFF
+    if (Voff >= Von) {
+        Voff = Von - 0.1;
+        document.getElementById('Voff').value = Voff;
+    }
+
+    document.getElementById('valVon').innerText = Von.toFixed(1) + ' V';
+    document.getElementById('valVoff').innerText = Voff.toFixed(1) + ' V';
+    document.getElementById('valNoise').innerText = Noise.toFixed(1) + ' V';
+
+    const time = [];
+    const vdd = [];
+    const v_on_line = [];
+    const v_off_line = [];
+    const output_hysteresis = [];
+    const output_no_hysteresis = [];
+
+    let currentStateHyst = 0;
+
+    // 生成一個帶有雜訊的上升再下降波形
+    for (let t = 0; t <= 100; t++) {
+        time.push(t);
+        v_on_line.push(Von);
+        v_off_line.push(Voff);
+
+        // 基礎波形：三角波
+        let baseV = (t < 50) ? (t / 50) * 6 : ((100 - t) / 50) * 6;
+        let currentNoise = Noise * Math.sin(t * 0.5) * (0.5 + 0.5 * Math.random());
+        let currentVdd = baseV + currentNoise;
+        vdd.push(currentVdd);
+
+        // 1. 計算【有遲滯】的 UVLO 狀態
+        if (currentStateHyst === 0 && currentVdd > Von) {
+            currentStateHyst = 1;
+        } else if (currentStateHyst === 1 && currentVdd < Voff) {
+            currentStateHyst = 0;
+        }
+        output_hysteresis.push(currentStateHyst * 1.5 + 7);
+
+        // 2. 計算【無遲滯】的 UVLO 狀態
+        let stateNoHyst = (currentVdd > Von) ? 1 : 0;
+        output_no_hysteresis.push(stateNoHyst * 1.5 + 9);
+    }
+
+    const ctx = document.getElementById('uvloChart').getContext('2d');
+    if (uvloChart) { uvloChart.destroy(); }
+
+    uvloChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: time,
+            datasets: [
+                { label: '輸入電壓 VDD (帶雜訊)', data: vdd, borderColor: '#2196F3', tension: 0.1, pointRadius: 0, borderWidth: 2 },
+                { label: 'V_ON 門檻', data: v_on_line, borderColor: '#4CAF50', borderDash: [5, 5], pointRadius: 0, borderWidth: 1 },
+                { label: 'V_OFF 門檻', data: v_off_line, borderColor: '#E91E63', borderDash: [5, 5], pointRadius: 0, borderWidth: 1 },
+                { label: 'UVLO 輸出 (有遲滯)', data: output_hysteresis, borderColor: '#FF9800', stepper: true, tension: 0, pointRadius: 0, borderWidth: 2 },
+                { label: 'UVLO 輸出 (無遲滯 - 易震顫)', data: output_no_hysteresis, borderColor: '#9E9E9E', stepper: true, tension: 0, pointRadius: 0, borderWidth: 2 }
+            ]
+        },
+        options: {
+            responsive: true,
+            interaction: { mode: 'index', intersect: false },
+            scales: {
+                x: { display: false, title: { display: true, text: '時間 (Time)' } },
+                y: { 
+                    min: 0, max: 11,
+                    title: { display: true, text: '電壓 (V) / 邏輯狀態' },
+                    ticks: {
+                        callback: function(value) {
+                            if (value === 7) return '有遲滯 0';
+                            if (value === 8.5) return '有遲滯 1';
+                            if (value === 9) return '無遲滯 0';
+                            if (value === 10.5) return '無遲滯 1';
+                            if (value <= 6) return value + 'V';
+                            return '';
+                        }
+                    }
+                }
+            }
+        }
+    });
+}
+
+updateUVLO();
+</script>
+
+<hr />
+<h2 id="simplis-uvlo">🛠️ 在 SIMPLIS 中建立 UVLO 模型</h2>
+<p>在了解理論後，我們要在 SIMPLIS 裡實現這個功能其實非常簡單。但首先，我們可以從 TPS40200 datasheet 中看到 UVLO 的真實應用電路：</p>
+<p><img alt="TPS40200 UVLO Application Circuit" src="https://cdn.jsdelivr.net/gh/joecanhelp/joe-can-help-images@main/images/20260405203909228.png" /></p>
+<div class="admonition tip">
+<p class="admonition-title">訊號標示小提示</p>
+<ul>
+<li>這裡的 <code>Run</code> 訊號為 Low-Active。為了後續能更直觀地辨識，我們統一將它標示為 <strong><code>Run#</code></strong>。</li>
+<li>TI 提供的電路圖有異常，bypass 電阻應該發生在 <span class="arithmatex">\(545\text{k}\Omega\)</span> 的位置。</li>
+</ul>
+</div>
+<p>很多工程師看懂了分壓，卻沒看懂「開關」是怎麼創造遲滯的。如果我們把旁路開關設計在下方，電壓反而會瞬間跌落造成「負遲滯」震盪。正確的硬體邏輯是<strong>透過旁路上方電阻，讓分壓電壓瞬間跳高</strong>。我們來推導一下這組精妙的數字（假設 <span class="arithmatex">\(R_{top}\)</span> 為 <span class="arithmatex">\(509\text{k}\Omega\)</span> 串聯 <span class="arithmatex">\(36\text{k}\Omega\)</span>，<span class="arithmatex">\(R_{bot}\)</span> 為 <span class="arithmatex">\(236\text{k}\Omega\)</span>）：</p>
+<ul>
+<li>
+<p><strong>IC 尚未工作 (Run# = H)</strong>：此時旁路開關斷開，上方電阻為總和 <span class="arithmatex">\(545\text{k}\Omega\)</span>。
+    當輸入電壓達到 4.3V 時，分壓點的電壓正好是：</p>
+<div class="arithmatex">\[
+V_{tap} = 4.3\text{V} \times \frac{236\text{k}\Omega}{545\text{k}\Omega + 236\text{k}\Omega} \approx 1.3\text{V}
+\]</div>
+<p>比較器偵測到電壓達標，使 <code>Run# = L</code>，IC 正式啟動。</p>
+</li>
+<li>
+<p><strong>IC 正常工作 (Run# = L)</strong>：啟動瞬間，內部開關閉合，把上方的 <span class="arithmatex">\(36\text{k}\Omega\)</span> 旁路掉，上方電阻只剩 <span class="arithmatex">\(509\text{k}\Omega\)</span>！
+    這會讓分壓點電壓瞬間<strong>往上跳躍</strong>，遠離 1.3V 的關機警戒線。若要讓 IC 關機，輸入電壓必須下降得更低：</p>
+<div class="arithmatex">\[
+V_{OFF} = 1.3\text{V} \times \frac{509\text{k}\Omega + 236\text{k}\Omega}{236\text{k}\Omega} \approx 4.1\text{V}
+\]</div>
+</li>
+</ul>
+<p>這就是真實 IC 產生 0.2V 遲滯區間的硬體智慧！不過在建立 Behavior Model 時，SIMPLIS 內建了多種邏輯元件，我們不需要親自用開關和電阻去刻畫這個過程。我們可以直接使用內建的 <strong>遲滯比較器 (Comparator with Hysteresis)</strong>：</p>
+<ol>
+<li>開啟 SIMPLIS，放置一個 <strong>Comparator with Hysteresis</strong>。</li>
+<li>將正輸入端接至電源腳位 <code>VDD</code>，負輸入端接至一電壓源<code>V1</code>，並設定數值為<code>{V_UVLO_REF}</code>。</li>
+<li>
+<p>按 <code>F11</code> 定義變數：</p>
+<pre><code>.var V_UVLO_ON = 4.3
+.var V_UVLO_OFF = 4.1
+.var V_UVLO_HYS = {V_UVLO_ON - V_UVLO_OFF}
+.var V_UVLO_REF = {(V_UVLO_ON + V_UVLO_OFF) / 2}
+</code></pre>
+</li>
+<li>
+<p>雙擊比較器，設定其參數：</p>
+<ul>
+<li><strong>Hysteresis (遲滯寬度)</strong>：設定為兩者的差值 <code>{V_UVLO_HYS}</code>。</li>
+</ul>
+</li>
+<li>這個比較器的輸出，就是我們的 <strong><code>Run</code> (全局致能訊號)</strong>。在後續的建模中，所有的模塊（包含振盪器、PWM 比較器）都必須收到這個訊號為 <code>High</code> 時，才允許動作。</li>
+</ol>
+<p>打好這層安全地基後，我們下一篇終於可以安心地喚醒晶片，建立它的心臟——RC 振盪器了！</p>
+<hr />
+<h2 id="_2">〽️模擬確認結果</h2>
+<p>由於現在只是 UVLO 的比較器，我們需要外給一個 <code>VDD</code> 訊號來測試比較器的輸出結果。 </p>
+<p>在 SIMPLIS 中，使用 <strong>Voltage Sources --&gt; Waveform Generator</strong> (快捷鍵為 <code>W</code>)，我們創造出一個 0 到 5V 的三角波訊號作為 <code>VDD</code> 的輸入，藉此觀察 UVLO 比較器的輸出是否依據我們想要的條件發生變化： </p>
+<ul>
+<li>當 <span class="arithmatex">\(V_{DD}\)</span> 上升超過 4.3V 時，<code>Run</code> 輸出切換為 <strong>H</strong>。  </li>
+<li>當 <span class="arithmatex">\(V_{DD}\)</span> 下降低於 4.1V 時，<code>Run</code> 輸出切換為 <strong>L</strong>。
+<img alt="image.png" src="https://cdn.jsdelivr.net/gh/joecanhelp/joe-can-help-images@main/images/20260406110205225.png" />
+<img alt="image.png" src="https://cdn.jsdelivr.net/gh/joecanhelp/joe-can-help-images@main/images/20260406110446925.png" /></li>
+</ul>
+<p><img alt="image.png" src="https://cdn.jsdelivr.net/gh/joecanhelp/joe-can-help-images@main/images/20260406110024118.png" /></p>
+<hr />
+<h2 id="_3">📥 實作檔案下載</h2>
+<p>如果你在繪製上有遇到困難，或者想直接看看最終的成果，可以下載我做好的完成檔：</p>
+<ul>
+<li><a href="../../assets/models/tps40200_part2_uvlo.sxsch">👉 下載 Part 2 完成檔：UVLO 遲滯比較器模型 (tps40200_part2_uvlo.sxsch)</a></li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

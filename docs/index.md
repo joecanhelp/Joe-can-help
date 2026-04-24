@@ -1,23 +1,46 @@
-# Welcome to JoeCanHelp
+# Welcome to Joe can help 👋
+
+歡迎來到我的技術筆記與分享空間！
+
 ![logo.png](https://cdn.jsdelivr.net/gh/joecanhelp/joe-can-help-images@main/images/logo.png)
 
+作為一名電源管理與 Controller IC 開發的工程師，我深知在電路設計的過程中，從理論推導、系統建模到最終的硬體落地，往往充滿了各種挑戰與眉角。這個網站的初衷很簡單：把那些藏在 Datasheet 裡的細節、複雜的迴路補償計算，以及在實驗室裡反覆驗證的除錯經驗，轉化為系統化的教學與實用的開發工具。
 
-# Welcome to MkDocs
+無論你是剛接觸電源設計的新手，還是身經百戰的業界老手，希望這裡的內容都能為你的開發日常提供一些實質的幫助（Joe can help!）。
 
-For full documentation visit [mkdocs.org](https://www.mkdocs.org).
+---
 
-## Commands
+## 🚀 網站核心內容
 
-* `mkdocs new [dir-name]` - Create a new project.
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
-* `mkdocs -h` - Print help message and exit.
+目前網站主要專注於以下兩大板塊，未來也會持續更新與擴充：
 
-## Project layout
+### 1. SIMPLIS 建模實戰 (IC Behavior Modeling)
+SIMPLIS 是電源工程師不可或缺的模擬利器。在這裡，我們不只是盲目地連線，而是採用 Top-Down 的架構思維，帶你從零開始打造精準的 IC 行為模型 (Behavior Model)。
 
-    mkdocs.yml    # The configuration file.
-    docs/
-        index.md  # The documentation homepage.
-        ...       # Other markdown pages, images and other files.
+- **經典案例拆解**：以真實的控制器（如 TPS40200）為例，進行教科書等級的手把手教學。
+- **模塊化設計**：從 UVLO 遲滯邏輯、RC 振盪器到誤差放大器，將複雜 IC 拆解為易於理解的積木 (sub-block)。
+- **參數化技巧**：善用變數定義，建立高彈性、可重複使用的 Sub-circuit，大幅提升模擬效率。
 
-## This is Title 3
+[👉 開始學習：SIMPLIS 建模實戰系列](ic-modeling/tps40200-part1.md)
+
+### 2. 實用工程工具 (Design Tools)
+為了加速日常的研發流程，我將繁瑣的數學推導與頻率響應分析，打包成了直覺、互動式的網頁工具。
+
+- **Type III 參數計算機**：專為電壓模式控制 (Voltage-Mode Control) 打造，視覺化呈現交越頻率與相位裕度，並快速計算出精準的 RC 補償元件參數。
+- 更多輔助工具（如 Excel VBA 文檔自動化腳本、可靠度規格整理）將會陸續上線。
+
+[👉 立即使用：Type III 參數計算機](Tool/TypeIII-Calculator.md)
+
+---
+
+## 🤝 業界同好交流
+
+技術的進步來自於不斷地碰撞與討論。在 IC 設計與電源轉換器（尤其是如多相交錯 Buck Converter、ZVS 應用等高階架構）的領域中，永遠有探討不完的 Topology 與控制策略。
+
+我非常渴望能與同在業界奮鬥的工程師們交流！如果你對以下主題有興趣，或者在開發上遇到有趣的挑戰，都非常歡迎與我聯繫：
+
+- SIMPLIS / SIMetrix 的進階模擬技巧與特殊收斂問題探討
+- Controller IC 的架構定義、保護機制設計與 AEC-Q100 等可靠度分析
+- 電源電路的系統級優化與各種迴路補償設計
+
+讓我們一起把複雜的黑盒子打開，把艱澀的技術變簡單。歡迎隨時在網站的專案頁面留言，或是透過 Email 與我交流！
