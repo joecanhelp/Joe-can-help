@@ -37,12 +37,14 @@
             "id": "8a7803aa7f73cd0a",
             "type": "leaf",
             "state": {
-              "type": "yaml",
+              "type": "markdown",
               "state": {
-                "file": "mkdocs.yml"
+                "file": "docs/index.md",
+                "mode": "source",
+                "source": false
               },
               "icon": "lucide-file",
-              "title": "mkdocs"
+              "title": "index"
             }
           }
         ],
@@ -119,7 +121,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "mkdocs.yml",
+                "file": "docs/index.md",
                 "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -129,7 +131,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "mkdocs 的反向連結"
+              "title": "index 的反向連結"
             }
           },
           {
@@ -180,13 +182,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "mkdocs.yml",
+                "file": "docs/index.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "mkdocs 的大綱"
+              "title": "index 的大綱"
             }
           }
         ],
@@ -207,13 +209,8 @@
       "bases:建立新的 base": false
     }
   },
-  "active": "e036aeeb436b33a9",
+  "active": "8a7803aa7f73cd0a",
   "lastOpenFiles": [
-    "overrides/partials/comments.html",
-    "overrides/partials",
-    "overrides",
-    "docs/ic-modeling/tps40200-part2.md",
-    "docs/index.md",
     "site/search/search_index.json",
     "site/search",
     "site/tool/type-iii-calculator/index.html",
@@ -222,9 +219,14 @@
     "site/tool/loop-gain-tune-by-type-iii",
     "site/ic-modeling/tps40200-part3/index.html",
     "site/ic-modeling/tps40200-part2/index.html",
+    "site/ic-modeling/tps40200-part1/index.html",
+    "site/ic-modeling/tps40200-part3",
+    "site/ic-modeling/tps40200-part2",
     "site/assets/images/favicon.png",
     "docs/tool/type-iii-calculator.md",
+    "docs/index.md",
     "drafts/Github-deploy-procedure.md",
+    "docs/ic-modeling/tps40200-part2.md",
     "docs/ic-modeling/tps40200-part1.md",
     "docs/tool/loop-gain-tune-by-type-iii.md",
     "site/assets/logo.png",

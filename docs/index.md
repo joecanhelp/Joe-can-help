@@ -29,7 +29,7 @@ SIMPLIS 是電源工程師不可或缺的模擬利器。在這裡，我們不只
 - **Type III 參數計算機**：專為電壓模式控制 (Voltage-Mode Control) 打造，視覺化呈現交越頻率與相位裕度，並快速計算出精準的 RC 補償元件參數。
 - 更多輔助工具（如 Excel VBA 文檔自動化腳本、可靠度規格整理）將會陸續上線。
 
-[👉 立即使用：Type III 參數計算機](Tool/TypeIII-Calculator.md)
+[👉 立即使用：Type III 參數計算機](tool/type-iii-calculator.md)
 
 ---
 

@@ -9,10 +9,10 @@
       
       
       
-        <link rel="prev" href="../..">
+        <link rel="prev" href="../../ic-modeling/tps40200-part3/">
       
       
-        <link rel="next" href="../tps40200-part2/">
+        <link rel="next" href="../type-iii-calculator/">
       
       
         
@@ -23,7 +23,7 @@
     
     
       
-        <title>[SIMPLIS 建模實戰 01] 拆解 TPS40200：從 Datasheet 到模型架構 - Joe can help</title>
+        <title>Loop Gain Tuning by Type III - Joe can help</title>
       
     
     
@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#simplis-01-tps40200-datasheet" class="md-skip">
+        <a href="#loop-gain-tuning-by-type-iii" class="md-skip">
           Skip to content
         </a>
       
@@ -109,7 +109,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              [SIMPLIS 建模實戰 01] 拆解 TPS40200：從 Datasheet 到模型架構
+              Loop Gain Tuning by Type III
             
           </span>
         </div>
@@ -254,20 +254,18 @@
       
   
   
-    
   
   
-  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
         
           
           <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
@@ -288,7 +286,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_2">
             <span class="md-nav__icon md-icon"></span>
             
@@ -303,37 +301,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    [SIMPLIS 建模實戰 01] 拆解 TPS40200：從 Datasheet 到模型架構
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../ic-modeling/tps40200-part1/" class="md-nav__link">
         
   
   
@@ -349,70 +320,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#tps40200" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        🔍 為什麼選 TPS40200？
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#top-down-approach" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        🧩 腳位解析與建模任務拆解 (Top-Down Approach)
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        🚀 接下來的挑戰
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        📚 參考資料
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -425,7 +332,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../tps40200-part2/" class="md-nav__link">
+      <a href="../../ic-modeling/tps40200-part2/" class="md-nav__link">
         
   
   
@@ -453,7 +360,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../tps40200-part3/" class="md-nav__link">
+      <a href="../../ic-modeling/tps40200-part3/" class="md-nav__link">
         
   
   
@@ -485,18 +392,20 @@
       
   
   
+    
   
   
+  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
         
           
           <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
@@ -517,7 +426,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
             
@@ -560,10 +469,19 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../tool/loop-gain-tune-by-type-iii/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -579,6 +497,7 @@
   
 
       </a>
+      
     </li>
   
 
@@ -591,7 +510,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../tool/type-iii-calculator/" class="md-nav__link">
+      <a href="../type-iii-calculator/" class="md-nav__link">
         
   
   
@@ -666,58 +585,6 @@
     
   
   
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#tps40200" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        🔍 為什麼選 TPS40200？
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#top-down-approach" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        🧩 腳位解析與建模任務拆解 (Top-Down Approach)
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        🚀 接下來的挑戰
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        📚 參考資料
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
 </nav>
                   </div>
                 </div>
@@ -733,55 +600,8 @@
 
 
 
-<h1 id="simplis-01-tps40200-datasheet">[SIMPLIS 建模實戰 01] 拆解 TPS40200：從 Datasheet 到模型架構</h1>
-<p>在 IC 建模的世界裡，我們最怕的就是一頭栽進電路圖裡盲目連線。一個優秀的 Behavior Model，必須建立在對 IC 方塊圖 (Block Diagram) 的透徹理解之上。</p>
-<p>在這個系列中，我們將以 TI 的經典降壓控制器 <strong>TPS40200</strong> 為例，一步步帶你用 SIMPLIS 打造出能精準模擬其行為的數位分身。</p>
-<hr />
-<h2 id="tps40200">🔍 為什麼選 TPS40200？</h2>
-<p>TPS40200 是一款非常適合新手入門的 Voltage-Mode Buck Controller。它只有 8 根腳位，卻五臟俱全，包含了所有電源控制器最核心的機制。</p>
-<p>更重要的是，它採用<strong>電壓模式控制</strong>，這表示我們需要為它設計外部的 <strong>Type III 補償網路</strong>（如果你還不知道怎麼設計，可以參考我們之前準備好的 <a href="../../tool/type-iii-calculator/">👉 Type III 參數計算機</a>！）。
-<img alt="image.png" src="https://cdn.jsdelivr.net/gh/joecanhelp/joe-can-help-images@main/images/20260405165511904.png" /></p>
-<hr />
-<h2 id="top-down-approach">🧩 腳位解析與建模任務拆解 (Top-Down Approach)</h2>
-<p>要建立 Behavior Model，我們的第一步是「拆解」。我們不需要畫出 IC 內部的每一顆電晶體，而是要把 8 根腳位歸納成 <strong>4 個核心積木 (Sub-circuits)</strong>：</p>
-<table>
-<thead>
-<tr>
-<th style="text-align: left;">腳位名稱</th>
-<th style="text-align: left;">功能描述</th>
-<th style="text-align: left;">對應的 SIMPLIS 建模積木 (Sub-circuit)</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;"><strong>VDD, GND</strong></td>
-<td style="text-align: left;">電源輸入與地</td>
-<td style="text-align: left;"><strong>電源管理模塊</strong>：建立 UVLO (欠壓鎖定) 邏輯，確保電壓足夠才啟動 IC。</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>RC</strong></td>
-<td style="text-align: left;">振盪器頻率設定</td>
-<td style="text-align: left;"><strong>時脈與 Ramp 產生器</strong>：透過充放電行為產生 Clock 訊號與 PWM 比較用的 Ramp 波形。</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>FB, COMP</strong></td>
-<td style="text-align: left;">誤差放大器反相輸入與輸出</td>
-<td style="text-align: left;"><strong>誤差放大器 (Error Amplifier)</strong>：建立具有高增益、受限於頻寬的理想運算放大器，並處理 VREF 基準電壓。</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>SS, ISNS, GATE</strong></td>
-<td style="text-align: left;">軟啟動、電流偵測、閘極驅動</td>
-<td style="text-align: left;"><strong>PWM 與保護邏輯</strong>：整合 PWM 比較器、過流保護 (OCP) 邏輯，以及最終推動 MOSFET 的 Driver。</td>
-</tr>
-</tbody>
-</table>
-<p><img alt="image.png" src="https://cdn.jsdelivr.net/gh/joecanhelp/joe-can-help-images@main/images/20260405171721955.png" /></p>
-<hr />
-<h2 id="_1">🚀 接下來的挑戰</h2>
-<p>透過上面的表格，我們已經把一個複雜的 IC 拆成了 4 個獨立的小任務。這種 <strong>Top-Down (由上而下)</strong> 的思維，是建構複雜 SIMPLIS 模型的心法。</p>
-<p>在下一篇文章中，我們將從電路的「心跳」開始，教你如何利用 SIMPLIS 內建元件，打造出能精準響應外部 <code>RC</code> 腳位參數的<strong>參數化振盪器 (Oscillator)</strong>！</p>
-<h2 id="_2">📚 參考資料</h2>
-<p>* <a href="https://www.ti.com/product/TPS40200">Texas Instruments TPS40200 官方網頁與 Datasheet</a></p>
+<h1 id="loop-gain-tuning-by-type-iii">Loop Gain Tuning by Type III</h1>
+<iframe src="/tool/loop-gain-tune-tool.html" width="100%" height="800px" style="border:none;"></iframe>
 
 
 

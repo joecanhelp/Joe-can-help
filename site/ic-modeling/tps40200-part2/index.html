@@ -546,6 +546,62 @@
   
   
     <li class="md-nav__item">
+      <a href="/tool/loop-gain-tune-tool.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Loop Gain Tuning Tool
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tool/loop-gain-tune-by-type-iii/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Loop Gain Tuning by Type III
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../tool/type-iii-calculator/" class="md-nav__link">
         
   
@@ -712,6 +768,11 @@
 <li><strong>關閉電壓 (<span class="arithmatex">\(V_{OFF}\)</span>)</strong>：電壓必須下降低於此點，IC 才關機（例如 4.1V）。</li>
 </ul>
 <p>這中間 0.2V 的差距就是「遲滯區間」，它提供了強大的抗雜訊能力。</p>
+<pre class="mermaid"><code>graph LR
+    A[電源輸入 VDD] --&gt; B{UVLO 判斷}
+    B -- VDD &gt; 4.3V --&gt; C[Run = H&lt;br&gt;IC 啟動]
+    B -- VDD &lt; 4.1V --&gt; D[Run = L&lt;br&gt;IC 關閉]
+    C --&gt; E((RC 振盪器開始跳動))</code></pre>
 <hr />
 <h2 id="_1">🎛️ 互動展示：遲滯效應的抗雜訊魔法</h2>
 <p>你可以透過下方的互動圖表，調整輸入電壓的「雜訊幅度」，並觀察有遲滯與無遲滯的 UVLO 輸出差異：</p>
