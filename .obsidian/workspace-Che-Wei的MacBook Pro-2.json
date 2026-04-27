@@ -37,14 +37,12 @@
             "id": "8a7803aa7f73cd0a",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "yaml",
               "state": {
-                "file": "docs/tool/loop-gain-tune-by-type-iii.md",
-                "mode": "source",
-                "source": false
+                "file": "mkdocs.yml"
               },
               "icon": "lucide-file",
-              "title": "loop-gain-tune-by-type-iii"
+              "title": "mkdocs"
             }
           }
         ],
@@ -121,7 +119,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "docs/tool/loop-gain-tune-by-type-iii.md",
+                "file": "mkdocs.yml",
                 "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -131,7 +129,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "loop-gain-tune-by-type-iii 的反向連結"
+              "title": "mkdocs 的反向連結"
             }
           },
           {
@@ -182,13 +180,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "docs/tool/loop-gain-tune-by-type-iii.md",
+                "file": "mkdocs.yml",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "loop-gain-tune-by-type-iii 的大綱"
+              "title": "mkdocs 的大綱"
             }
           }
         ],
@@ -209,7 +207,7 @@
       "bases:建立新的 base": false
     }
   },
-  "active": "8a7803aa7f73cd0a",
+  "active": "e036aeeb436b33a9",
   "lastOpenFiles": [
     "site/search/search_index.json",
     "site/search",
@@ -217,8 +215,8 @@
     "site/tool/type-iii-calculator",
     "site/tool/loop-gain-tune-by-type-iii/index.html",
     "site/tool/loop-gain-tune-by-type-iii",
-    "site/ic-modeling/tps40200-part2/index.html",
     "site/ic-modeling/tps40200-part3/index.html",
+    "site/ic-modeling/tps40200-part2/index.html",
     "site/ic-modeling/tps40200-part1/index.html",
     "site/ic-modeling/tps40200-part3",
     "site/ic-modeling/tps40200-part2",
