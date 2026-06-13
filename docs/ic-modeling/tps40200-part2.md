@@ -3,6 +3,8 @@
 在我們準備讓晶片的心臟（振盪器）跳動之前，必須先經過一位嚴格的守門員 —— **UVLO (Under-Voltage Lockout，欠壓鎖定)**。
 
 想像一下，當電源剛接上，電壓從 0V 緩慢上升時，IC 內部的邏輯閘和運算放大器都處於「半醒半睡」的不穩定狀態。如果這時候就允許輸出 PWM 訊號去推動外部的功率開關，極有可能造成 MOSFET 擊穿炸毀。UVLO 的任務，就是確保電源電壓 ($V_{DD}$) 達到絕對安全的標準後，才發出「全局致能 (Global Enable)」的指令。
+![image.png](https://cdn.jsdelivr.net/gh/joecanhelp/joe-can-help-images@main/images/20260513151521637.png)
+
 
 ---
 

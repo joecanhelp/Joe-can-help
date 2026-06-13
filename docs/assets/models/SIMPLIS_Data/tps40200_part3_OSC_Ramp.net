@@ -1,0 +1,34 @@
+* C:\Users\joe.chang\OneDrive\_website\joe-can-help\docs\assets\models\tps40200_part3_OSC_Ramp.sxsch
+*#SIMETRIX
+.node_map RC 20
+.node_map CLK 21
+.node_map VIN 19
+.options
++ PSP_NPT=10001
++ POP_ITRMAX=20
++ POP_OUTPUT_CYCLES=5
++ SNAPSHOT_INTVL=0
++ SNAPSHOT_NPT=11
++ MIN_AVG_TOPOLOGY_DUR=1a
++ AVG_TOPOLOGY_DUR_MEASUREMENT_WINDOW=128
+.tran 1m 0
+
+
+.var R_RC = 100k
+.var C_RC = 470p
+
+C1 20 0 {C_RC} IC=0
+.PRINT V(#CLK)
+.GRAPH :#CLK axisType="digital" persistence=-1 curveLabel="CLK" analysis="tran|pop" xLog="auto" yLog="auto"  nowarn=true disabled=false PROBEREF=Probe1  
+.PRINT V(#RC)
+.GRAPH :#RC curveLabel= RC nowarn=true ylog=auto xlog=auto analysis=tran|pop disabled=false PROBEREF=Probe2  
+R1 19 20 {R_RC}
+R2 19 14 100k
+R3 14 0 11.11k
+X$S1 20 0 21 0 VC_SWITCH_V2 vars: 
+X$U1 12 15 0 20 14 SIMPLIS_DIGI1_COMP_Y vars: IC=0 RIN=10Meg ROUT=10 HYSTWD=2M VOL=0 VOH=5 DELAY=2p
+X$U2 13 18 0 17 20 SIMPLIS_DIGI1_COMP_Y vars: IC=0 RIN=10Meg ROUT=10 HYSTWD=2M VOL=0 VOH=5 DELAY=2p
+X$U3 21 16 0 12 13 SIMPLIS_DIGI1_SRLATCH_Y vars: IC=0  RIN=10Meg ROUT=10 TH=2.5 HYSTWD=1 VOL=0 VOH=5  OUT_DELAY=20p SET_RESET_LEVEL=1 GNDREF='Y'  DOM='NONE' 
+V1 17 0 150m
+V2 19 0 12
+.end

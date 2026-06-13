@@ -39,12 +39,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "docs/tool/loop-gain-tune-by-type-iii.md",
+                "file": "drafts/Github-deploy-procedure.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "loop-gain-tune-by-type-iii"
+              "title": "Github-deploy-procedure"
             }
           }
         ],
@@ -182,13 +182,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "docs/tool/loop-gain-tune-by-type-iii.md",
+                "file": "drafts/Github-deploy-procedure.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "loop-gain-tune-by-type-iii 的大綱"
+              "title": "Github-deploy-procedure 的大綱"
             }
           }
         ],
@@ -217,26 +217,37 @@
     "site/tool/type-iii-calculator",
     "site/tool/loop-gain-tune-by-type-iii/index.html",
     "site/tool/loop-gain-tune-by-type-iii",
-    "site/ic-modeling/tps40200-part2/index.html",
-    "site/ic-modeling/tps40200-part3/index.html",
-    "site/ic-modeling/tps40200-part1/index.html",
-    "site/ic-modeling/tps40200-part3",
-    "site/ic-modeling/tps40200-part2",
+    "site/kid-playground/index.html",
+    "site/ic-modeling/tps40200-part7/index.html",
+    "site/ic-modeling/tps40200-part7",
+    "site/ic-modeling/tps40200-part6/index.html",
+    "site/ic-modeling/tps40200-part6",
     "site/assets/images/favicon.png",
+    "site/kid-playground/LogicKid/assets/images/water_gun.png",
+    "site/kid-playground/LogicKid/assets/images/dino_sad.png",
+    "site/kid-playground/LogicKid/assets/images/dino_idle.png",
+    "site/kid-playground/LogicKid/assets/images/dino_fall.png",
+    "site/kid-playground/LogicKid/assets/images/butterfly.png",
+    "site/kid-playground/LogicKid/assets/images/bunny.png",
+    "site/kid-playground/LogicKid/assets/images/bg_nature.png",
+    "site/kid-playground/LogicKid/assets/images/bee.png",
+    "site/ic-modeling/temp/part3 waveform.png",
+    "docs/kid-playground/index.md",
+    "docs/ic-modeling/tps40200-part3.md",
+    "drafts/Obsidian & MkDocs輔助設定.md",
+    "drafts/MkDocs相關指令.md",
     "docs/ic-modeling/tps40200-part2.md",
+    "GEMINI.md",
+    "docs/ic-modeling/tps40200-part1.md",
+    "docs/ic-modeling/tps40200-part7.md",
+    "docs/ic-modeling/tps40200-part6.md",
+    "docs/ic-modeling/tps40200-part5.md",
+    "drafts/Github-deploy-procedure.md",
+    "docs/ic-modeling/tps40200-part4.md",
+    "docs/tool/loop-gain-tune-by-type-iii.md",
     "docs/index.md",
     "docs/tool/type-iii-calculator.md",
-    "drafts/Github-deploy-procedure.md",
-    "docs/ic-modeling/tps40200-part1.md",
-    "docs/tool/loop-gain-tune-by-type-iii.md",
-    "site/assets/logo.png",
-    "site/assets/favicon.png",
-    "docs/ic-modeling/tps40200-part3.md",
     "docs/about.md",
-    "mathjax.js.md",
-    "docs/assets/favicon.png",
-    "docs/assets/logo.png",
-    "docs/assets/Logo.png",
-    "docs/assets/Icon.png"
+    "mathjax.js.md"
   ]
 }

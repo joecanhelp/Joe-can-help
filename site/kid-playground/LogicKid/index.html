@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>LogicKid - 邏輯水管遊戲</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@700;900&display=swap');
+
+        :root {
+            --primary-color: #4facfe;
+            --secondary-color: #00f2fe;
+            --water-on: #00a8ff;
+            --water-off: #dcdde1;
+            --bg-color: #f1f2f6;
+            --text-color: #2f3542;
+            --panel-bg: rgba(255, 255, 255, 0.85);
+        }
+
+        * {
+            box-sizing: border-box;
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: none; /* Prevent scroll on drag */
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Nunito', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        #game-container {
+            position: relative;
+            flex: 1;
+            display: flex;
+            flex-direction: row;
+            background-image: url('assets/images/bg_nature.png');
+            background-size: cover;
+            background-position: center;
+        }
+
+        @media (max-width: 768px) {
+            #game-container {
+                flex-direction: column;
+            }
+        }
+
+        #play-area {
+            position: relative;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        #toolbox {
+            width: 180px;
+            background: var(--panel-bg);
+            backdrop-filter: blur(10px);
+            border-left: 4px solid white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 10px;
+            gap: 15px;
+            z-index: 10;
+            box-shadow: -4px 0 15px rgba(0,0,0,0.1);
+            overflow-y: auto;
+        }
+
+        @media (max-width: 768px) {
+            #toolbox {
+                width: 100%;
+                height: 120px;
+                flex-direction: row;
+                border-left: none;
+                border-top: 4px solid white;
+                box-shadow: 0 -4px 15px rgba(0,0,0,0.1);
+                overflow-x: auto;
+                overflow-y: hidden;
+            }
+        }
+
+        .gate-item {
+            width: 80px;
+            height: 80px;
+            background: white;
+            border-radius: 16px;
+            border: 4px solid var(--primary-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: grab;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .gate-item:active {
+            cursor: grabbing;
+        }
+
+        .gate-icon {
+            font-size: 24px;
+            font-weight: 900;
+            color: var(--primary-color);
+        }
+
+        .gate-label {
+            font-size: 14px;
+            margin-top: 5px;
+            font-weight: 700;
+        }
+
+        /* Animals for gates removed */
+
+        #level-info {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: var(--panel-bg);
+            padding: 15px 25px;
+            border-radius: 20px;
+            border: 3px solid white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            z-index: 10;
+            backdrop-filter: blur(5px);
+        }
+
+        #level-info h1 {
+            margin: 0 0 5px 0;
+            font-size: 24px;
+            color: var(--primary-color);
+        }
+        
+        #level-info p {
+            margin: 0;
+            font-size: 16px;
+            font-weight: bold;
+            color: #666;
+        }
+
+        /* SVG Pipes */
+        #pipe-svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .pipe {
+            fill: none;
+            stroke: var(--water-off);
+            stroke-width: 12;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            transition: stroke 0.5s ease;
+        }
+        .pipe-inner {
+            fill: none;
+            stroke: white;
+            stroke-width: 6;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            transition: stroke 0.5s ease;
+        }
+
+        .pipe.water-on {
+            stroke: var(--water-on);
+        }
+        .pipe-inner.water-on {
+            stroke: #7bed9f; /* Bright green-ish blue core for water */
+        }
+
+        /* Game Elements positioned absolutely */
+        .game-element {
+            position: absolute;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transform: translate(-50%, -50%);
+        }
+
+        .faucet {
+            width: 60px;
+            height: 60px;
+            background: #dfe4ea;
+            border: 4px solid #a4b0be;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: 900;
+            box-shadow: inset 0 -4px 0 rgba(0,0,0,0.1);
+        }
+        .faucet.water-on {
+            background: var(--water-on);
+            border-color: #0984e3;
+            color: white;
+        }
+        .faucet-label {
+            position: absolute;
+            left: -30px;
+            font-size: 20px;
+            font-weight: 900;
+            color: white;
+            text-shadow: 1px 1px 3px black;
+        }
+
+        .node-slot {
+            width: 90px;
+            height: 90px;
+            background: rgba(255, 255, 255, 0.5);
+            border: 4px dashed var(--primary-color);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+        .node-slot.hover {
+            background: rgba(255, 255, 255, 0.9);
+            transform: translate(-50%, -50%) scale(1.1);
+            border-style: solid;
+        }
+
+        /* Dinosaurs and Watergun */
+        .target-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .water-gun {
+            width: 100px;
+            height: 100px;
+            background-image: url('assets/images/water_gun.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            margin-bottom: 20px;
+            transform: scaleX(-1); /* Face left */
+        }
+        .dino {
+            width: 120px;
+            height: 120px;
+            background-image: url('assets/images/dino_idle.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            transition: all 0.3s;
+        }
+        
+        .dino.sad { background-image: url('assets/images/dino_sad.png'); }
+        .dino.fall { 
+            background-image: url('assets/images/dino_fall.png'); 
+            animation: fallAnimation 1s forwards;
+        }
+
+        @keyframes fallAnimation {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(90deg) translate(20px, 0); }
+        }
+
+        .water-splash {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            left: -60px;
+            top: 20px;
+            background: radial-gradient(circle, #00a8ff 20%, transparent 60%);
+            border-radius: 50%;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+        .water-splash.active {
+            opacity: 1;
+            animation: splashAnim 0.5s infinite alternate;
+        }
+        @keyframes splashAnim {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.2); }
+        }
+
+        /* Dragging element */
+        .drag-clone {
+            position: fixed;
+            pointer-events: none;
+            z-index: 1000;
+            opacity: 0.9;
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+
+        /* Placed gate */
+        .placed-gate {
+            width: 80px;
+            height: 80px;
+            background: white;
+            border-radius: 16px;
+            border: 4px solid var(--primary-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        /* Overlay */
+        #overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(5px);
+            z-index: 2000;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal {
+            background: white;
+            padding: 40px;
+            border-radius: 30px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            border: 6px solid var(--primary-color);
+            animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            max-width: 90%;
+        }
+        @keyframes popIn {
+            0% { transform: scale(0.5); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .modal h2 {
+            font-size: 36px;
+            color: var(--primary-color);
+            margin-top: 0;
+        }
+        .modal.fail h2 { color: #ff6b81; border-color: #ff6b81; }
+        
+        .btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 20px;
+            font-weight: 900;
+            border-radius: 15px;
+            cursor: pointer;
+            box-shadow: 0 5px 0 #0984e3;
+            transition: all 0.1s;
+            margin: 10px;
+            font-family: 'Nunito', sans-serif;
+        }
+        .btn:active {
+            transform: translateY(5px);
+            box-shadow: 0 0 0 #0984e3;
+        }
+        .btn.fail-btn { background: #ff6b81; box-shadow: 0 5px 0 #ff4757; }
+
+        .speech-bubble {
+            position: absolute;
+            background: white;
+            border-radius: 10px;
+            padding: 10px;
+            font-weight: bold;
+            color: #ff4757;
+            top: -40px;
+            white-space: nowrap;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+            z-index: 50;
+        }
+        .speech-bubble::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 10px 10px 0;
+            border-style: solid;
+            border-color: white transparent transparent transparent;
+        }
+
+    </style>
+</head>
+<body>
+
+<div id="game-container">
+    <div id="level-info">
+        <h1 id="level-title">1-1 AND 閘</h1>
+        <p id="level-desc">Y = A AND B</p>
+    </div>
+
+    <div id="play-area">
+        <svg id="pipe-svg"></svg>
+        <div id="elements-container"></div>
+    </div>
+
+    <div id="toolbox">
+        <!-- Generated dynamically -->
+    </div>
+</div>
+
+<div id="overlay">
+    <div class="modal" id="modal-content">
+        <h2 id="modal-title">太棒了！</h2>
+        <div style="height: 150px; background-image: url('assets/images/bunny.png'); background-size: contain; background-repeat: no-repeat; background-position: center; margin-bottom: 20px;" id="modal-img"></div>
+        <button class="btn" id="next-btn">下一關</button>
+        <button class="btn fail-btn" id="retry-btn" style="display: none;">再玩一次</button>
+    </div>
+</div>
+
+<script>
+    const gatesData = [
+        { type: 'AND', inputs: 2, label: 'AND', hint: '全部都要好' },
+        { type: 'OR', inputs: 2, label: 'OR', hint: '有一個就好' },
+        { type: 'NOT', inputs: 1, label: 'NOT', hint: '反著來也好' },
+        { type: 'BUFFER', inputs: 1, label: 'Buffer', hint: '推一把就好' },
+        { type: 'XOR', inputs: 2, label: 'XOR', hint: '一個恰恰好' }
+    ];
+
+    const gateSVGs = {
+        'AND': `<svg viewBox="0 0 100 100" width="50" height="50"><path d="M 30 20 L 50 20 A 30 30 0 0 1 50 80 L 30 80 Z" fill="#bbedff" stroke="#4facfe" stroke-width="8" stroke-linejoin="round"/></svg>`,
+        'OR': `<svg viewBox="0 0 100 100" width="50" height="50"><path d="M 25 20 Q 75 20 85 50 Q 75 80 25 80 Q 45 50 25 20 Z" fill="#bbedff" stroke="#4facfe" stroke-width="8" stroke-linejoin="round"/></svg>`,
+        'NOT': `<svg viewBox="0 0 100 100" width="50" height="50"><path d="M 25 25 L 65 50 L 25 75 Z" fill="#bbedff" stroke="#4facfe" stroke-width="8" stroke-linejoin="round"/><circle cx="75" cy="50" r="8" fill="white" stroke="#4facfe" stroke-width="8"/></svg>`,
+        'BUFFER': `<svg viewBox="0 0 100 100" width="50" height="50"><path d="M 30 25 L 75 50 L 30 75 Z" fill="#bbedff" stroke="#4facfe" stroke-width="8" stroke-linejoin="round"/></svg>`,
+        'XOR': `<svg viewBox="0 0 100 100" width="50" height="50"><path d="M 12 20 Q 32 50 12 80" fill="none" stroke="#4facfe" stroke-width="8" stroke-linecap="round"/><path d="M 28 20 Q 78 20 88 50 Q 78 80 28 80 Q 48 50 28 20 Z" fill="#bbedff" stroke="#4facfe" stroke-width="8" stroke-linejoin="round"/></svg>`
+    };
+
+    const levels = [
+        { id: '1-1', title: '1-1 AND 閘', desc: '讓水槍噴水！', layout: '2-in', inputs: { A: 1, B: 1 } },
+        { id: '1-2', title: '1-2 OR 閘', desc: '讓水槍噴水！', layout: '2-in', inputs: { A: 1, B: 0 } },
+        { id: '1-3', title: '1-3 NOT 閘', desc: '讓水槍噴水！', layout: '1-in', inputs: { A: 0 } },
+        { id: '1-4', title: '1-4 Buffer 閘', desc: '讓水槍噴水！', layout: '1-in', inputs: { A: 1 } },
+        { id: '1-5', title: '1-5 XOR 閘', desc: '讓水槍噴水！', layout: '2-in', inputs: { A: 1, B: 0 } },
+        { id: '2-1', title: '2-1 組合關卡', desc: '任意組合讓水槍噴水', layout: '2-stage', inputs: { A: 1, B: 1, C: 1, D: 1 } },
+        { id: '2-2', title: '2-2 組合關卡', desc: '任意組合讓水槍噴水', layout: '2-stage', inputs: { A: 1, B: 0, C: 1, D: 1 } },
+        { id: '2-3', title: '2-3 組合關卡', desc: '任意組合讓水槍噴水', layout: '2-stage', inputs: { A: 1, B: 1, C: 0, D: 0 } },
+        { id: '2-4', title: '2-4 組合關卡', desc: '任意組合讓水槍噴水', layout: '2-stage', inputs: { A: 1, B: 1, C: 0, D: 1 } },
+        { id: '2-5', title: '2-5 組合關卡', desc: '任意組合讓水槍噴水', layout: '2-stage', inputs: { A: 0, B: 0, C: 1, D: 0 } }
+    ];
+
+    let currentLevelIdx = 0;
+    let placedGates = {}; // { 'X1': 'AND' }
+
+    const playArea = document.getElementById('play-area');
+    const elementsContainer = document.getElementById('elements-container');
+    const pipeSvg = document.getElementById('pipe-svg');
+    const toolbox = document.getElementById('toolbox');
+    
+    function initToolbox() {
+        toolbox.innerHTML = '';
+        gatesData.forEach(gate => {
+            const el = document.createElement('div');
+            el.className = `gate-item gate-${gate.type}`;
+            el.dataset.type = gate.type;
+            el.dataset.inputs = gate.inputs;
+            el.dataset.hint = gate.hint;
+            
+            el.innerHTML = `
+                <div class="gate-icon">${gateSVGs[gate.type]}</div>
+            `;
+            
+            el.addEventListener('pointerdown', handleDragStart);
+            el.addEventListener('click', () => { showHint(el, gate.hint); });
+            
+            toolbox.appendChild(el);
+        });
+    }
+
+    function showHint(element, text) {
+        let bubble = element.querySelector('.speech-bubble');
+        if (!bubble) {
+            bubble = document.createElement('div');
+            bubble.className = 'speech-bubble';
+            element.appendChild(bubble);
+        }
+        bubble.textContent = text;
+        bubble.style.opacity = '1';
+        setTimeout(() => { bubble.style.opacity = '0'; }, 2000);
+    }
+
+    let dragClone = null;
+    let currentDragType = null;
+    let currentDragInputs = 0;
+
+    function handleDragStart(e) {
+        if (e.target.closest('.speech-bubble')) return;
+        
+        const target = e.currentTarget;
+        currentDragType = target.dataset.type;
+        currentDragInputs = parseInt(target.dataset.inputs);
+        
+        dragClone = target.cloneNode(true);
+        dragClone.className = 'gate-item drag-clone';
+        dragClone.style.left = e.clientX + 'px';
+        dragClone.style.top = e.clientY + 'px';
+        document.body.appendChild(dragClone);
+        
+        document.addEventListener('pointermove', handleDragMove);
+        document.addEventListener('pointerup', handleDragEnd);
+        e.preventDefault();
+    }
+
+    function handleDragMove(e) {
+        if (!dragClone) return;
+        dragClone.style.left = e.clientX + 'px';
+        dragClone.style.top = e.clientY + 'px';
+        
+        const slots = document.querySelectorAll('.node-slot');
+        slots.forEach(slot => {
+            const rect = slot.getBoundingClientRect();
+            if (e.clientX > rect.left && e.clientX < rect.right &&
+                e.clientY > rect.top && e.clientY < rect.bottom) {
+                if (parseInt(slot.dataset.inputs) === currentDragInputs) {
+                    slot.classList.add('hover');
+                }
+            } else {
+                slot.classList.remove('hover');
+            }
+        });
+    }
+
+    function handleDragEnd(e) {
+        document.removeEventListener('pointermove', handleDragMove);
+        document.removeEventListener('pointerup', handleDragEnd);
+        
+        if (dragClone) {
+            dragClone.remove();
+            dragClone = null;
+        }
+        
+        const slots = document.querySelectorAll('.node-slot.hover');
+        if (slots.length > 0) {
+            const slot = slots[0];
+            slot.classList.remove('hover');
+            placeGate(currentDragType, slot.dataset.id);
+        }
+    }
+
+    function placeGate(type, nodeId) {
+        const slot = document.querySelector(`.node-slot[data-id="${nodeId}"]`);
+        if (!slot) return;
+        
+        slot.innerHTML = `
+            <div class="placed-gate gate-${type}">
+                <div class="gate-icon">${gateSVGs[type]}</div>
+            </div>
+        `;
+        placedGates[nodeId] = type;
+        evaluateCircuit();
+    }
+
+    const layoutConfig = {
+        '2-in': {
+            faucets: [ { id: 'A', x: 20, y: 30 }, { id: 'B', x: 20, y: 70 } ],
+            nodes: [ { id: 'X1', x: 50, y: 50, inputs: 2, sources: ['A', 'B'] } ],
+            target: { x: 80, y: 50, source: 'X1' }
+        },
+        '1-in': {
+            faucets: [ { id: 'A', x: 20, y: 50 } ],
+            nodes: [ { id: 'X1', x: 50, y: 50, inputs: 1, sources: ['A'] } ],
+            target: { x: 80, y: 50, source: 'X1' }
+        },
+        '2-stage': {
+            faucets: [
+                { id: 'A', x: 10, y: 20 },
+                { id: 'B', x: 10, y: 40 },
+                { id: 'C', x: 10, y: 60 },
+                { id: 'D', x: 10, y: 80 }
+            ],
+            nodes: [
+                { id: 'X1', x: 40, y: 30, inputs: 2, sources: ['A', 'B'] },
+                { id: 'X2', x: 40, y: 70, inputs: 2, sources: ['C', 'D'] },
+                { id: 'Y',  x: 65, y: 50, inputs: 2, sources: ['X1', 'X2'] }
+            ],
+            target: { x: 85, y: 50, source: 'Y' }
+        }
+    };
+
+    function renderLevel() {
+        const level = levels[currentLevelIdx];
+        document.getElementById('level-title').textContent = level.title;
+        document.getElementById('level-desc').textContent = level.desc;
+        
+        elementsContainer.innerHTML = '';
+        pipeSvg.innerHTML = '';
+        placedGates = {};
+        
+        const config = layoutConfig[level.layout];
+        const playRect = playArea.getBoundingClientRect();
+        const cw = playRect.width;
+        const ch = playRect.height;
+        const getPx = (pctX, pctY) => ({ x: cw * pctX / 100, y: ch * pctY / 100 });
+        
+        let coords = {};
+
+        config.faucets.forEach(f => {
+            const fPx = getPx(f.x, f.y);
+            coords[f.id] = { x: fPx.x + 30, y: fPx.y };
+            
+            const fEl = document.createElement('div');
+            fEl.className = `game-element faucet ${level.inputs[f.id] ? 'water-on' : ''}`;
+            fEl.style.left = fPx.x + 'px';
+            fEl.style.top = fPx.y + 'px';
+            fEl.innerHTML = `<div class="faucet-label">${f.id}</div>${level.inputs[f.id] ? '1' : '0'}`;
+            elementsContainer.appendChild(fEl);
+        });
+
+        config.nodes.forEach(n => {
+            const nodePx = getPx(n.x, n.y);
+            coords[n.id] = { inX: nodePx.x - 45, inY: nodePx.y, outX: nodePx.x + 45, outY: nodePx.y };
+            
+            const nodeEl = document.createElement('div');
+            nodeEl.className = 'game-element node-slot';
+            nodeEl.style.left = nodePx.x + 'px';
+            nodeEl.style.top = nodePx.y + 'px';
+            nodeEl.dataset.inputs = n.inputs;
+            nodeEl.dataset.id = n.id;
+            
+            nodeEl.addEventListener('click', () => {
+                if (placedGates[n.id]) {
+                    delete placedGates[n.id];
+                    nodeEl.innerHTML = '';
+                    evaluateCircuit();
+                }
+            });
+            elementsContainer.appendChild(nodeEl);
+            
+            n.sources.forEach(src => {
+                let srcCoord = coords[src].outX ? { x: coords[src].outX, y: coords[src].outY } : coords[src];
+                drawPipe(srcCoord.x, srcCoord.y, coords[n.id].inX, coords[n.id].inY, `pipe-${src}-${n.id}`, false);
+            });
+        });
+
+        const targetPx = getPx(config.target.x, config.target.y);
+        const targetEl = document.createElement('div');
+        targetEl.className = 'game-element target-container';
+        targetEl.style.left = targetPx.x + 'px';
+        targetEl.style.top = targetPx.y + 'px';
+        targetEl.innerHTML = `
+            <div class="water-splash" id="water-splash"></div>
+            <div class="water-gun"></div>
+            <div class="dino" id="dino"></div>
+        `;
+        elementsContainer.appendChild(targetEl);
+        
+        const finalNodeId = config.target.source;
+        drawPipe(coords[finalNodeId].outX, coords[finalNodeId].outY, targetPx.x - 50, targetPx.y - 60, `pipe-${finalNodeId}-out`, false);
+        
+        evaluateCircuit();
+    }
+
+    function drawPipe(x1, y1, x2, y2, id, isOn) {
+        const cp1x = x1 + (x2 - x1) / 2;
+        const cp1y = y1;
+        const cp2x = x1 + (x2 - x1) / 2;
+        const cp2y = y2;
+        const pathData = `M ${x1} ${y1} C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${x2} ${y2}`;
+        
+        const pathOut = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        pathOut.setAttribute('d', pathData);
+        pathOut.setAttribute('class', `pipe ${isOn ? 'water-on' : ''}`);
+        pathOut.setAttribute('id', `${id}-outer`);
+        
+        const pathIn = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        pathIn.setAttribute('d', pathData);
+        pathIn.setAttribute('class', `pipe-inner ${isOn ? 'water-on' : ''}`);
+        pathIn.setAttribute('id', `${id}-inner`);
+        
+        pipeSvg.appendChild(pathOut);
+        pipeSvg.appendChild(pathIn);
+    }
+
+    function setPipeState(id, isOn) {
+        const outer = document.getElementById(`${id}-outer`);
+        const inner = document.getElementById(`${id}-inner`);
+        if (outer && inner) {
+            if (isOn) {
+                outer.classList.add('water-on');
+                inner.classList.add('water-on');
+            } else {
+                outer.classList.remove('water-on');
+                inner.classList.remove('water-on');
+            }
+        }
+    }
+
+    function evaluateGate(type, inA, inB) {
+        if (!type) return 0;
+        inB = inB !== undefined ? inB : 0;
+        switch(type) {
+            case 'AND': return (inA && inB) ? 1 : 0;
+            case 'OR': return (inA || inB) ? 1 : 0;
+            case 'NOT': return (!inA) ? 1 : 0;
+            case 'BUFFER': return inA ? 1 : 0;
+            case 'XOR': return (inA !== inB) ? 1 : 0;
+        }
+        return 0;
+    }
+
+    function evaluateCircuit() {
+        const level = levels[currentLevelIdx];
+        const config = layoutConfig[level.layout];
+        let nodeVals = {};
+        
+        config.faucets.forEach(f => {
+            nodeVals[f.id] = level.inputs[f.id] ? 1 : 0;
+        });
+
+        config.nodes.forEach(n => {
+            const gateType = placedGates[n.id];
+            let inA = nodeVals[n.sources[0]] || 0;
+            let inB = n.sources[1] ? (nodeVals[n.sources[1]] || 0) : 0;
+            
+            nodeVals[n.id] = evaluateGate(gateType, inA, inB);
+            
+            n.sources.forEach(src => {
+                setPipeState(`pipe-${src}-${n.id}`, nodeVals[src]);
+            });
+        });
+        
+        const finalNodeId = config.target.source;
+        const finalOutput = nodeVals[finalNodeId] || 0;
+        setPipeState(`pipe-${finalNodeId}-out`, finalOutput);
+        
+        const splash = document.getElementById('water-splash');
+        const dino = document.getElementById('dino');
+        const allFilled = config.nodes.every(n => placedGates[n.id]);
+        
+        if (finalOutput === 1) {
+            splash.classList.add('active');
+            dino.className = 'dino fall';
+            setTimeout(showWinScreen, 1500);
+        } else if (allFilled) {
+            splash.classList.remove('active');
+            dino.className = 'dino sad';
+            setTimeout(showFailScreen, 1500);
+        } else {
+            splash.classList.remove('active');
+            dino.className = 'dino';
+        }
+    }
+
+    function showWinScreen() {
+        const modal = document.getElementById('modal-content');
+        modal.className = 'modal';
+        document.getElementById('modal-title').textContent = '太棒了！過關！';
+        document.getElementById('modal-img').style.backgroundImage = "url('assets/images/bunny.png')";
+        document.getElementById('next-btn').style.display = 'inline-block';
+        document.getElementById('retry-btn').style.display = 'none';
+        document.getElementById('overlay').style.display = 'flex';
+    }
+
+    function showFailScreen() {
+        const modal = document.getElementById('modal-content');
+        modal.className = 'modal fail';
+        document.getElementById('modal-title').textContent = '哎呀，水管沒水！';
+        document.getElementById('modal-img').style.backgroundImage = "url('assets/images/dino_sad.png')";
+        document.getElementById('next-btn').style.display = 'none';
+        document.getElementById('retry-btn').style.display = 'inline-block';
+        document.getElementById('overlay').style.display = 'flex';
+    }
+
+    document.getElementById('next-btn').addEventListener('click', () => {
+        document.getElementById('overlay').style.display = 'none';
+        if (currentLevelIdx < levels.length - 1) {
+            currentLevelIdx++;
+            renderLevel();
+        } else {
+            alert('恭喜你完成所有關卡！');
+            currentLevelIdx = 0;
+            renderLevel();
+        }
+    });
+
+    document.getElementById('retry-btn').addEventListener('click', () => {
+        document.getElementById('overlay').style.display = 'none';
+        renderLevel();
+    });
+
+    window.addEventListener('resize', () => {
+        const savedGates = {...placedGates};
+        renderLevel();
+        Object.keys(savedGates).forEach(k => {
+            placeGate(savedGates[k], k);
+        });
+    });
+
+    initToolbox();
+    setTimeout(renderLevel, 100);
+</script>
+</body>
+</html>
