@@ -12,7 +12,7 @@
         <link rel="prev" href="../tps40200-part2/">
       
       
-        <link rel="next" href="../../tool/loop-gain-tune-by-type-iii/">
+        <link rel="next" href="../tps40200-part4/">
       
       
         
@@ -541,6 +541,118 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tps40200-part4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    [SIMPLIS 建模實戰 04] 控制中樞：受限頻寬的誤差放大器 (E/A) 與 VREF
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tps40200-part5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    [SIMPLIS 建模實戰 05] 守護系統的盔甲：Soft-Start 與 OCP 保護機制
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tps40200-part6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    [SIMPLIS 建模實戰 06] 最後的拼圖：PWM 邏輯與 P-Channel 驅動器
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tps40200-part7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    [SIMPLIS 建模實戰 07] 終極試煉：模型驗證與系統級 Benchmark
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -713,6 +825,88 @@
   
 
     
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kid's Playground
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Kid's Playground
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../kid-playground/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kid's Playground
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
   </ul>
 </nav>
                   </div>
@@ -872,17 +1066,24 @@
 <p>這個模塊不僅要能產生決定切換頻率的 Clock 訊號，還要輸出與之同步的鋸齒波 (Ramp)，供後續的 PWM 比較器使用。</p>
 <hr />
 <h2 id="_1">📐 核心數學與控制邏輯</h2>
-<p>在動手畫電路前，我們先確立控制邏輯。TPS40200 的 RC 腳位是透過外部電阻 <span class="arithmatex">\(R_{RC}\)</span> 向電容 <span class="arithmatex">\(C_{RC}\)</span> 充電，並在內部設定了兩個電壓門檻：</p>
+<p>在動手畫電路前，我們先從 Datasheet 的公式回推內部的電路邏輯。TPS40200 的震盪頻率公式為：</p>
+<div class="arithmatex">\[
+f_{sw} = \frac{1}{R_{RC} \cdot C_{RC} \cdot 0.105}
+\]</div>
+<p>這意味著周期 <span class="arithmatex">\(T_{sw}\)</span> 約等於 <span class="arithmatex">\(0.105 \cdot \tau\)</span>。根據 RC 充電公式 <span class="arithmatex">\(V(t) = V_{IN} - (V_{IN} - V_{start})e^{-t/\tau}\)</span>，我們可以精確定義門檻：</p>
 <ul>
-<li><strong>高門檻 (<span class="arithmatex">\(V_{peak}\)</span>)</strong>：當電容電壓充到此點時，觸發內部開關放電。</li>
-<li><strong>低門檻 (<span class="arithmatex">\(V_{valley}\)</span>)</strong>：當電容電壓放電至此點時，關閉開關，重新開始充電。</li>
+<li><strong>低門檻 (<span class="arithmatex">\(V_{valley}\)</span>)</strong>：固定為 <strong><span class="arithmatex">\(150\text{mV}\)</span></strong>。</li>
+<li><strong>高門檻 (<span class="arithmatex">\(V_{peak}\)</span>)</strong>：由 <span class="arithmatex">\(T_{sw} = 0.105\tau\)</span> 回推：
+  <span class="arithmatex">\(V_{peak} = V_{IN} - (V_{IN} - 150\text{m}) \cdot e^{-0.105} \approx 0.1 V_{IN} + 135\text{mV}\)</span></li>
 </ul>
+<p>這說明內部的 <span class="arithmatex">\(V_{peak}\)</span> 主要是由 <span class="arithmatex">\(V_{IN}\)</span> 經由 <strong><span class="arithmatex">\(10\%\)</span> 的電阻分壓</strong> 構成。若設定分壓電阻的上電阻為 <span class="arithmatex">\(100\text{k}\Omega\)</span>，則下電阻約為 <strong><span class="arithmatex">\(11.11\text{k}\Omega\)</span></strong>。</p>
 <p>因此，建立這個振盪器，我們在 SIMPLIS 中需要以下三個核心元件：</p>
 <ol>
-<li><strong>比較器 (Comparator)</strong>：用來偵測電壓是否碰到 <span class="arithmatex">\(V_{peak}\)</span> 或 <span class="arithmatex">\(V_{valley}\)</span>。</li>
+<li><strong>比較器 (Comparator)</strong>：用來偵測電壓是否碰到 <span class="arithmatex">\(V_{peak}\)</span> (隨 <span class="arithmatex">\(V_{IN}\)</span> 變動) 或 <span class="arithmatex">\(V_{valley}\)</span> (固定 <span class="arithmatex">\(150\text{mV}\)</span>)。</li>
 <li><strong>SR 觸發器 (SR Flip-Flop)</strong>：用來記憶當前的狀態（正在充電，還是正在放電）。</li>
 <li><strong>電壓控制開關 (VCSW)</strong>：作為放電路徑的理想開關。</li>
 </ol>
+<p><img alt="image.png" src="https://cdn.jsdelivr.net/gh/joecanhelp/joe-can-help-images@main/images/20260513153033089.png" /></p>
 <hr />
 <h2 id="simplis">🛠️ SIMPLIS 實作步驟</h2>
 <p>請開啟 SIMPLIS，開啟一個新的 Schematic，我們一步一步來拼裝：</p>
@@ -895,8 +1096,8 @@
 </ol>
 <h3 id="step-2">Step 2: 設置電壓偵測 (比較器)</h3>
 <p>從 SIMPLIS 的邏輯元件庫中拉出兩個理想比較器：
-1. <strong>上限比較器 (U1)</strong>：正端接 <code>RC</code>，負端接一個恆定電壓源 (例如 <span class="arithmatex">\(V_{peak} = 2.0V\)</span>)。當 RC 電壓大於 2.0V 時，輸出 High。
-2. <strong>下限比較器 (U2)</strong>：負端接 <code>RC</code>，正端接一個恆定電壓源 (例如 <span class="arithmatex">\(V_{valley} = 0.1V\)</span>)。當 RC 電壓小於 0.1V 時，輸出 High。</p>
+1. <strong>上限比較器 (U1)</strong>：正端接 <code>RC</code>，負端接往 <span class="arithmatex">\(V_{peak}\)</span> 的產生電路（可利用 VCVS 實作 <span class="arithmatex">\(0.1 V_{IN} + 135\text{mV}\)</span>）。
+2. <strong>下限比較器 (U2)</strong>：負端接 <code>RC</code>，正端接一個恆定電壓源 <strong><span class="arithmatex">\(150\text{mV}\)</span></strong>。當 RC 電壓低於此門檻時，輸出 High。</p>
 <h3 id="step-3-sr">Step 3: 狀態記憶 (SR 觸發器)</h3>
 <p>拉出一個 SR Flip-Flop (NAND 結構或 NOR 結構皆可，這裡以 NOR 為例)：
 * 將上限比較器 (U1) 的輸出接到 <strong><code>S</code> (Set)</strong>。
@@ -910,7 +1111,7 @@
 </ol>
 <blockquote>
 <p><strong>💡 運作機制解析：</strong>
-當電容充電到 2.0V 時，U1 觸發，SR 觸發器 Set，開關導通，電容瞬間放電；當電壓掉到 0.1V 時，U2 觸發，SR 觸發器 Reset，開關斷開，電容再次開始充電。完美的鋸齒波就此誕生！</p>
+當電容充電到 <span class="arithmatex">\(V_{peak}\)</span> 時，U1 觸發，SR 觸發器 Set，開關導通，電容瞬間放電；當電壓掉到 <span class="arithmatex">\(150\text{mV}\)</span> 時，U2 觸發，SR 觸發器 Reset，開關斷開，電容再次開始充電。完美的鋸齒波就此誕生！</p>
 </blockquote>
 <hr />
 <h2 id="f11">💻 F11 視窗：注入參數靈魂</h2>

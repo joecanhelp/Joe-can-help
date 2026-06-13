@@ -485,6 +485,118 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tps40200-part4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    [SIMPLIS 建模實戰 04] 控制中樞：受限頻寬的誤差放大器 (E/A) 與 VREF
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tps40200-part5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    [SIMPLIS 建模實戰 05] 守護系統的盔甲：Soft-Start 與 OCP 保護機制
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tps40200-part6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    [SIMPLIS 建模實戰 06] 最後的拼圖：PWM 邏輯與 P-Channel 驅動器
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tps40200-part7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    [SIMPLIS 建模實戰 07] 終極試煉：模型驗證與系統級 Benchmark
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -657,6 +769,88 @@
   
 
     
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kid's Playground
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Kid's Playground
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../kid-playground/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kid's Playground
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
   </ul>
 </nav>
                   </div>
@@ -757,7 +951,8 @@
 
 <h1 id="simplis-02-ic-uvlo">[SIMPLIS 建模實戰 02] 喚醒 IC 的守門員：UVLO 與遲滯效應</h1>
 <p>在我們準備讓晶片的心臟（振盪器）跳動之前，必須先經過一位嚴格的守門員 —— <strong>UVLO (Under-Voltage Lockout，欠壓鎖定)</strong>。</p>
-<p>想像一下，當電源剛接上，電壓從 0V 緩慢上升時，IC 內部的邏輯閘和運算放大器都處於「半醒半睡」的不穩定狀態。如果這時候就允許輸出 PWM 訊號去推動外部的功率開關，極有可能造成 MOSFET 擊穿炸毀。UVLO 的任務，就是確保電源電壓 (<span class="arithmatex">\(V_{DD}\)</span>) 達到絕對安全的標準後，才發出「全局致能 (Global Enable)」的指令。</p>
+<p>想像一下，當電源剛接上，電壓從 0V 緩慢上升時，IC 內部的邏輯閘和運算放大器都處於「半醒半睡」的不穩定狀態。如果這時候就允許輸出 PWM 訊號去推動外部的功率開關，極有可能造成 MOSFET 擊穿炸毀。UVLO 的任務，就是確保電源電壓 (<span class="arithmatex">\(V_{DD}\)</span>) 達到絕對安全的標準後，才發出「全局致能 (Global Enable)」的指令。
+<img alt="image.png" src="https://cdn.jsdelivr.net/gh/joecanhelp/joe-can-help-images@main/images/20260513151521637.png" /></p>
 <hr />
 <h2 id="uvlo-hysteresis">🛡️ 為什麼 UVLO 必須要有「遲滯 (Hysteresis)」？</h2>
 <p>很多初學者會以為，UVLO 只是一個簡單的比較器：「大於 4.3V 就開機，小於 4.3V 就關機」。</p>
