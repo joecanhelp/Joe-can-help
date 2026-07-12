@@ -1,9 +1,0 @@
-$$$ 1 11802 2    simplis  DATA FOR PLOTTING,  Fri May 15 15:38:16 2026     
-INPUT FILE: C:/Users/joe.chang/OneDrive/_website/joe-can-help/docs/assets/models/SIMPLIS_Data/tps40200_part3_OSC_Ramp.deck
-Transient Analysis
-11802 DATA PTS                
-2 VARIABLES                                       
-0   TIME
-1   V(#CLK)
-2   V(#RC)
-
